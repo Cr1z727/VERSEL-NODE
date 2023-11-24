@@ -1,17 +1,41 @@
 const express = require("express");
 const app = express();
 const port = 3000;
-app.use(express.json());
 const { Pool } = require('pg');
+
+
+
+require('dotenv').config()
+
 
 const pool = new Pool({
     user: 'default',
-    host: 'ep-orange-smoke-08960365.us-east-1.postgres.vercel-storage.com',
+    host: 'ep-cool-unit-16977893-pooler.us-east-1.postgres.vercel-storage.com',
     database: 'verceldb',
-    password: 'bf3BTmnKYd4P',
+    password: '3eZr0cpDGOFK',
     port: 5432,
     ssl: {rejectUnauthorized: false}
 });
+
+
+
+app.use(express.json());
+
+
+
+const API_KEY = process.env.API_KEY
+const apiKeyValidation = (req,res,next) =>{
+    const userApiKey=req.get('x-api-key');
+    if (userApiKey && userApiKey === API_KEY){
+        next();
+    } 
+    else{
+        res.status(401).send('Invalid Api Key')
+    }
+    
+};
+
+app.use(apiKeyValidation)
 
 
 app.get("/students", (req, res) => {
@@ -60,7 +84,7 @@ app.get("/students/:id", (req, res) => {
 
 app.post('/students', function(req,res){
     const insertUsersQuery = `
-    INSERT INTO students (id,name,lastname, notes) VALUES
+    INSERT INTO students (id,nombre,lastname, notes) VALUES
     ('${req.body.id}','${req.body.name}','${req.body.lastname}','${req.body.notes}');
     `;
    
@@ -114,6 +138,12 @@ const borrarUsuario = `DELETE FROM students WHERE id = ${req.params.id}`
 })
 })
 
+
+
+
 app.listen(port, ()=>{
     console.log("the app is running");
 })
+
+
+module.exports=app
