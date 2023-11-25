@@ -84,8 +84,8 @@ app.get("/students/:id", (req, res) => {
 
 app.post('/students', function(req,res){
     const insertUsersQuery = `
-    INSERT INTO students (id,name,lastname, notes) VALUES
-    ('${req.body.id}','${req.body.name}','${req.body.lastname}','${req.body.notes}');
+    INSERT INTO students (id,nombre,lastname, notes) VALUES
+    ('${req.body.id}','${req.body.nombre}','${req.body.lastname}','${req.body.notes}');
     `;
    
 
@@ -103,7 +103,7 @@ app.post('/students', function(req,res){
 app.put("/students/put/:id", (req, res) => {
 
 
-    const updateData = `UPDATE students SET id = ${req.body.id}, name ='${req.body.name}', lastname = '${req.body.lastname}', notes = '${req.body.notes}' WHERE id IN (${req.params.id})`;
+    const updateData = `UPDATE students SET id = ${req.body.id}, nombre ='${req.body.nombre}', lastname = '${req.body.lastname}', notes = '${req.body.notes}' WHERE id IN (${req.params.id})`;
 
     pool.query(updateData)
         .then(respond => {
