@@ -84,7 +84,7 @@ app.get("/students/:id", (req, res) => {
 
 app.post('/students', function(req,res){
     const insertUsersQuery = `
-    INSERT INTO students (id,nombre,lastname, notes) VALUES
+    INSERT INTO students (id,name,lastname, notes) VALUES
     ('${req.body.id}','${req.body.name}','${req.body.lastname}','${req.body.notes}');
     `;
    
